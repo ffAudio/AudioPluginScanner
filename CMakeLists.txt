@@ -9,7 +9,8 @@ set_property(GLOBAL PROPERTY USE_FOLDERS YES)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../JUCE/ ${CMAKE_CURRENT_BINARY_DIR}/JUCE/)
 
 juce_add_console_app(${PROJECT_NAME}
-    PRODUCT_NAME "AudioPluginScanner")
+    PRODUCT_NAME    "AudioPluginScanner"
+    PLUGINHOST_AU   TRUE)
 
 target_sources(${PROJECT_NAME}
     PRIVATE
@@ -17,7 +18,6 @@ target_sources(${PROJECT_NAME}
 
 target_compile_definitions(${PROJECT_NAME}
     PRIVATE
-        JUCE_PLUGINHOST_AU=1
         JUCE_PLUGINHOST_VST3=1
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0)
@@ -25,6 +25,4 @@ target_compile_definitions(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
     PRIVATE
         ${project_sources}
-        juce::juce_core
-        juce::juce_audio_basics
         juce::juce_audio_processors)

@@ -1,12 +1,14 @@
 
 #include <juce_audio_processors/juce_audio_processors.h>
 
-int main (int argc, char** argv)
+
+void scanFile (const juce::ArgumentList& args)
 {
     juce::AudioPluginFormatManager formatManager;
     formatManager.addDefaultFormats();
-        
-    auto filenameOrID = "/Users/daniel/Library/Audio/Plug-Ins/Components/PGM-Equalizer.component";
+
+    auto pluginFile = args.getFileForOption ("--file|-f");
+    auto filenameOrID = pluginFile.getFullPathName();
 
     for (auto format : formatManager.getFormats())
     {
@@ -19,7 +21,18 @@ int main (int argc, char** argv)
                 DBG (f->createXml()->toString());
         }
     }
+}
 
 
-    return 0;
+int main (int argc, char** argv)
+{
+    juce::ConsoleApplication app;
+
+    app.addHelpCommand ("--help|-h", "Help me!", true);
+    app.addVersionCommand ("--version|-v", "AudioPluginScanner version 0.0.1");
+
+    app.addCommand ({"--file", "--file filename", "scans the given file", "",
+        [](const juce::ArgumentList& args) { scanFile(args); }});
+    
+    return app.findAndRunCommand (argc, argv);
 }
