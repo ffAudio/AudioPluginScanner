@@ -6,7 +6,7 @@ message(${CMAKE_CURRENT_BINARY_DIR})
 
 option(JUCE_ENABLE_MODULE_SOURCE_GROUPS "Enable Module Source Groups" ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS YES)
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../JUCE/ ${CMAKE_CURRENT_BINARY_DIR}/JUCE/)
+add_subdirectory(../JUCE/ ${CMAKE_CURRENT_BINARY_DIR}/JUCE/)
 
 juce_add_console_app(${PROJECT_NAME}
     PRODUCT_NAME    "AudioPluginScanner"
@@ -14,7 +14,8 @@ juce_add_console_app(${PROJECT_NAME}
 
 target_sources(${PROJECT_NAME}
     PRIVATE
-        main.cpp)
+        main.cpp
+        scanFile.h)
 
 target_compile_definitions(${PROJECT_NAME}
     PRIVATE
